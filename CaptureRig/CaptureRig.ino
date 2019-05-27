@@ -1,7 +1,7 @@
 #include <AccelStepper.h>
 //#include <MultiStepper.h>
 
-
+#define ARM_SHOULD_ROTATE true
 #define ARM_S_PIN 3
 #define ARM_D_PIN 4
 #define TURNTABLE_S_PIN 5
@@ -9,6 +9,23 @@
 #define SHUTTER_PIN 7
 #define LOWER_LIMIT_PIN -1
 #define UPPER_LIMIT_PIN -1
+
+// Capture parameters
+const int CAPTURES_PER_ROTATION = 30;
+const int PRE_CAPTURE_DELAY     = 500;
+const int CAPTURE_SIGNAL_DELAY  = 1500;
+const int POST_CAPTURE_DELAY    = 100;
+
+// Turn table parameters
+const int TURNTABLE_ROTATION_COUNT    = 1;
+const int TURNTABLE_ROTATION_DEGREES  = 360;
+const int TURNTABLE_ROTATION_DELAY    = 500;
+
+// Arm parameters
+const int ARM_ROTATION_POS_DELAY    = 2000;
+const int ARM_ROTATION_RANGE        = 18000;
+const int ARM_ROTATION_START_OFFSET = 4000;
+const int ARM_ROTATION_POSITIONS    = 3;
 
 AccelStepper arm(1, ARM_S_PIN, ARM_D_PIN);
 
@@ -81,22 +98,10 @@ void rotateAndCapture(int captures, int degrees = 12, int delayMS = 0) {
   int stepsToCapture = (int)((double)steps / captures);
   for (int t = 0; t < steps; t++){
     motorStepRoutine(TURNTABLE_D_PIN, TURNTABLE_S_PIN, 500);
-    if(t % stepsToCapture == 0) capture(0, 10, 10);
+    if(t % stepsToCapture == 0) capture(PRE_CAPTURE_DELAY, CAPTURE_SIGNAL_DELAY, POST_CAPTURE_DELAY);
     if(delayMS > 0) delay(delayMS);
   }
 }
-
-const int TURNTABLE_ROTATION_COUNT = 1;
-const int TURNTABLE_ROTATION_DEGREES = 360;
-const int TURNTABLE_ROTATION_DELAY = 500;
-
-const int CAPTURES_PER_ROTATION = 30;
-
-#define ARM_SHOULD_ROTATE true
-const int ARM_ROTATION_POS_DELAY = 2000;
-const int ARM_ROTATION_RANGE = 18000;
-const int ARM_ROTATION_START_OFFSET = 4000;
-const int ARM_ROTATION_POSITIONS = 3;
 
 void capturePosition(){
   for (int f = 0; f < TURNTABLE_ROTATION_COUNT; f++){
