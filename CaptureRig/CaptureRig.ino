@@ -12,9 +12,9 @@
 
 // Capture parameters
 const int CAPTURES_PER_ROTATION = 30;
-const int PRE_CAPTURE_DELAY     = 500;
-const int CAPTURE_SIGNAL_DELAY  = 1500;
-const int POST_CAPTURE_DELAY    = 100;
+const int PRE_CAPTURE_DELAY     = 500;  // Delay time before initiating the capture. Since the turn table needs to be stopped, extra settle time is needed for vibration to diminish.
+const int CAPTURE_SIGNAL_DELAY  = 700;  // Last working RAW delay = 1500; // Delay time after sending HIGH signal to relay. Allows the camera to complete 'cycle time', see https://www.imaging-resource.com/PRODS/D90/D90A6.HTM for more info.
+const int POST_CAPTURE_DELAY    = 100;  // Delay time after sending LOW signal to relay. Just to be safe; for 30 captures per vertical position, it adds only 9 seconds to total time.
 
 // Turn table parameters
 const int TURNTABLE_ROTATION_COUNT    = 1;
