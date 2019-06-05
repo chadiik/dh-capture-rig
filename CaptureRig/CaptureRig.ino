@@ -22,10 +22,10 @@ const int TURNTABLE_ROTATION_DEGREES  = 360;
 const int TURNTABLE_ROTATION_DELAY    = 500;
 
 // Arm parameters
-const int ARM_ROTATION_POS_DELAY    = 2000;
-const int ARM_ROTATION_RANGE        = 18000;
-const int ARM_ROTATION_START_OFFSET = 4000;
-const int ARM_ROTATION_POSITIONS    = 3;
+const int ARM_ROTATION_POS_DELAY = 2000;
+const int ARM_ROTATION_RANGE = 18000;
+const int ARM_ROTATION_START_OFFSET = 3000; // Last working offset = 4000;
+const int ARM_ROTATION_POSITIONS = 5; // n captures positions
 
 AccelStepper arm(1, ARM_S_PIN, ARM_D_PIN);
 
